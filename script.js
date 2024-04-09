@@ -40,3 +40,42 @@ function vote(option) {
   // Save poll results
   savePollResults();
 }
+
+// Load poll results when the page is loaded
+loadPollResults();
+
+// Simple Number Guessing Game
+let randomNumber;
+let attempts = 0;
+let guessedCorrectly = false;
+
+function guessNumber() {
+  const guess = parseInt(prompt('Guess a number between 1 and 100:'));
+
+  if (isNaN(guess) || guess < 1 || guess > 100) {
+    alert('Please enter a valid number between 1 and 100.');
+    return;
+  }
+
+  attempts++;
+
+  if (guess === randomNumber) {
+    alert(`Congratulations! You guessed the correct number ${randomNumber} in ${attempts} attempts!`);
+    guessedCorrectly = true;
+  } else if (guess < randomNumber) {
+    alert('Too low! Try again.');
+  } else {
+    alert('Too high! Try again.');
+  }
+
+  if (!guessedCorrectly) {
+    guessNumber();
+  }
+}
+
+function startGame() {
+  randomNumber = Math.floor(Math.random() * 100) + 1;
+  attempts = 0;
+  guessedCorrectly = false;
+  guessNumber();
+}
