@@ -3,23 +3,37 @@ let pollResults = {};
 
 function loadPollResults() {
   fetch('poll_results.json')
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to load poll results');
+      }
+      return response.json();
+    })
     .then(data => {
       pollResults = data;
+      console.log('Poll results loaded:', pollResults);  // Debug log
     })
     .catch(error => {
       console.error('Error loading poll results:', error);
+      // You can initialize pollResults with default values if the file isn't found
+      pollResults = { 'Yes': 0, 'No': 0 };  // Default values if the file can't be loaded
     });
 }
 
 // Save poll results to JSON file
 function savePollResults() {
   fetch('poll_results.json', {
-    method: 'POST',
+    method: 'POST',  // You may need to adjust this depending on your server's allowed methods
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(pollResults)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Failed to save poll results');
+    }
+    console.log('Poll results saved:', pollResults);  // Debug log
   })
   .catch(error => {
     console.error('Error saving poll results:', error);
