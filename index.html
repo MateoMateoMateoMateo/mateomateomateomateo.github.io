@@ -1,32 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>4-Agustin Sumuroy Website</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header>
-    <h1>4-Agustin Sumuroy Website</h1>
-  </header>
+<html><body>
+<div id="test">scroll to understand</div>
+<div id="wrapper" style="height: 400px; overflow: auto;">
+  <div id="content"> </div>
+</div>
 
-  <div class="container">
-    <p>Welcome to the 4-Agustin Sumuroy Website! This site is for 4-Agustin Sumuroy ONLY.</p>
-    <p>Explore more:</p>
-    <ul>
-      <li><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Click here to explore more!</a></li>
-    </ul>
+<script language="JavaScript">
+  // we will add this content, replace for anything you want to add
+  var more = '<div style="height: 1000px; background: #EEE;"></div>';
 
-    <p>Do you like this website?</p>
-    <div class="poll-buttons">
-      <button onclick="vote('Yes')">Yes</button>
-      <button onclick="vote('No')">No</button>
-    </div>
+  var wrapper = document.getElementById("wrapper");
+  var content = document.getElementById("content");
+  var test = document.getElementById("test");
+  content.innerHTML = more;
 
-    <button class="start-game-button" onclick="startGame()">Start Number Guessing Game</button>
-  </div>
+  // cross browser addEvent, today you can safely use just addEventListener
+  function addEvent(obj,ev,fn) {
+    if(obj.addEventListener) obj.addEventListener(ev,fn,false);
+    else if(obj.attachEvent) obj.attachEvent("on"+ev,fn);    
+  }
 
-  <script src="script.js"></script>
-</body>
-</html>
+  // this is the scroll event handler
+  function scroller() {
+    // print relevant scroll info
+    test.innerHTML = wrapper.scrollTop+"+"+wrapper.offsetHeight+"+100>"+content.offsetHeight;
+
+    // add more contents if user scrolled down enough
+    if(wrapper.scrollTop+wrapper.offsetHeight+100>content.offsetHeight) {
+      content.innerHTML+= more;
+    }
+  }
+
+  // hook the scroll handler to scroll event
+  addEvent(wrapper,"scroll",scroller);
+</script>
+</body></html>
