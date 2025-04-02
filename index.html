@@ -6,13 +6,28 @@
     </div>
 
     <script language="JavaScript">
-      // we will add this content, replace for anything you want to add
-      var more = '<div style="height: 1000px; background: #EEE;"></div>';
+      // Function to generate random text
+      function generateRandomText() {
+        const randomSentences = [
+          "Lorem ipsum dolor sit amet.",
+          "Consectetur adipiscing elit.",
+          "Sed do eiusmod tempor incididunt.",
+          "Ut labore et dolore magna aliqua.",
+          "Ut enim ad minim veniam.",
+          "Quis nostrud exercitation ullamco laboris nisi.",
+          "Duis aute irure dolor in reprehenderit.",
+          "Excepteur sint occaecat cupidatat non proident.",
+          "Sunt in culpa qui officia deserunt mollit anim id est laborum."
+        ];
+        return randomSentences[Math.floor(Math.random() * randomSentences.length)];
+      }
+
+      var more = '<div style="height: 100px; background: #EEE; padding: 10px;">' + generateRandomText() + '</div>';
 
       var wrapper = document.getElementById("wrapper");
       var content = document.getElementById("content");
       var test = document.getElementById("test");
-      content.innerHTML += more;  // Append the initial content
+      content.innerHTML += more;  // Append initial content with random text
 
       // cross-browser addEvent, today you can safely use just addEventListener
       function addEvent(obj, ev, fn) {
@@ -20,18 +35,18 @@
         else if (obj.attachEvent) obj.attachEvent("on" + ev, fn);
       }
 
-      // this is the scroll event handler
+      // This is the scroll event handler
       function scroller() {
-        // print relevant scroll info
-        test.innerHTML = "Come on, keep on scrolling";
+        // Print relevant scroll info
+        test.innerHTML = "Keep scrolling!";
 
-        // add more contents if user scrolled down enough
+        // Add more random content if user scrolled down enough
         if (wrapper.scrollTop + wrapper.offsetHeight + 100 > content.offsetHeight) {
-          content.innerHTML += more;  // Append content when scrolling
+          content.innerHTML += '<div style="height: 100px; background: #EEE; padding: 10px;">' + generateRandomText() + '</div>';
         }
       }
 
-      // hook the scroll handler to scroll event
+      // Hook the scroll handler to the scroll event
       addEvent(wrapper, "scroll", scroller);
     </script>
   </body>
