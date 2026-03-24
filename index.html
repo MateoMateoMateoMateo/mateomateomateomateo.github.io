@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>whimsical chaos</title>
+<title>chaos</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -14,7 +14,7 @@ body {
   background: linear-gradient(270deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
   background-size: 800% 800%;
   animation: gradientShift 20s ease infinite;
-  overflow-x: hidden;
+  overflow: hidden;
   color: white;
   text-shadow: 2px 2px 4px black;
 }
@@ -25,158 +25,167 @@ body {
   100% {background-position:0% 50%;}
 }
 
-h1, h2, h3 {
-  text-align: center;
-  animation: floaty 3s ease-in-out infinite;
-}
-
-@keyframes floaty {
-  0%,100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+h1,h2,h3 {
+  text-align:center;
+  cursor:grab;
 }
 
 iframe {
-  display: block;
-  margin: 20px auto;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(255,255,255,0.7);
+  display:block;
+  margin:auto;
+  border-radius:20px;
+  box-shadow:0 0 30px white;
+  cursor:grab;
 }
 
-/* sparkle stars */
-.star {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  background: white;
-  border-radius: 50%;
-  animation: twinkle 2s infinite alternate;
+/* dvd logo */
+#dvd {
+  position:fixed;
+  width:120px;
+  top:100px;
+  left:100px;
+  font-size:20px;
+  font-weight:bold;
+  color:black;
+  background:white;
+  padding:10px;
+  border-radius:10px;
 }
 
-@keyframes twinkle {
-  from {opacity: 0.2;}
-  to {opacity: 1;}
+/* virus popup */
+#virus {
+  position:fixed;
+  top:30%;
+  left:30%;
+  background:black;
+  color:red;
+  padding:20px;
+  border:3px solid red;
+  display:none;
+  z-index:9999;
 }
 
-/* floating emojis */
-.emoji {
-  position: fixed;
-  font-size: 20px;
-  animation: floatUp linear infinite;
+/* mini game */
+#game {
+  position:fixed;
+  bottom:10px;
+  right:10px;
+  background:black;
+  padding:10px;
+  border:2px solid white;
 }
 
-@keyframes floatUp {
-  from {transform: translateY(100vh);}
-  to {transform: translateY(-10vh);}
-}
-
-/* cursor trail */
-.trail {
-  position: fixed;
-  pointer-events: none;
-  width: 10px;
-  height: 10px;
-  background: pink;
-  border-radius: 50%;
-  animation: fadeOut 1s forwards;
-}
-
-@keyframes fadeOut {
-  to {opacity: 0; transform: scale(2);}
-}
-
-/* rainbow text */
-.rainbow {
-  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
-  -webkit-background-clip: text;
-  color: transparent;
-  animation: rainbowMove 5s linear infinite;
-}
-
-@keyframes rainbowMove {
-  from {background-position: 0%;}
-  to {background-position: 200%;}
+#target {
+  width:50px;
+  height:50px;
+  background:red;
+  position:absolute;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<iframe width="500" height="500"
-src="https://www.youtube.com/embed/DLzxrzFCyOs?hl=en_US&version=3&rel=0&autoplay=1"
-frameborder="1" allowfullscreen></iframe>
+<audio autoplay loop>
+<source src="https://www.myinstants.com/media/sounds/trololo.mp3">
+</audio>
 
-<h1 class="animate__animated animate__bounce rainbow">T'boli stuff here</h1>
-<h2>67 is CORNY. PLEASE STOP. PLEASE. PLEASE. PLEASE.</h2>
+<div id="virus">
+⚠️ VIRUS DETECTED ⚠️<br>
+Deleting system32...<br>
+Just kidding lol 😭<br>
+<button onclick="document.getElementById('virus').style.display='none'">close</button>
+</div>
+
+<div id="dvd">DVD</div>
+
+<iframe width="400" height="300"
+src="https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1">
+</iframe>
+
+<h1 class="animate__animated animate__bounce">T'boli stuff here</h1>
 <h1>who cares if ts looks bad its a personal site xDDDDD</h1>
 <h3>- - - - - - - - - - - - -- - adrian</h3>
-<center><h1 class="rainbow">hellwo! :3</h1></center>
-
+<h1>hellwo! :3</h1>
 <h1>i genuienly suck at spelling and coding :sob:</h1>
+<h1>Hi</h1>
+<h1>Hi</h1>
+<h1>Hi</h1>
+<h1>Hi</h1>
 
-<h1>Hi</h1>
-<h1>Hi</h1>
-<h1>Hi</h1>
-<h1>Hi</h1>
+<div id="game">
+score: <span id="score">0</span>
+<div id="target"></div>
+</div>
 
 <script>
-// generate stars
-for (let i = 0; i < 80; i++) {
-  let star = document.createElement("div");
-  star.className = "star";
-  star.style.top = Math.random() * 100 + "vh";
-  star.style.left = Math.random() * 100 + "vw";
-  star.style.animationDuration = (Math.random()*2+1)+"s";
-  document.body.appendChild(star);
-}
+// DRAG EVERYTHING
+document.querySelectorAll("h1,h2,h3,iframe,#dvd").forEach(el=>{
+  el.onmousedown = function(e){
+    let shiftX = e.clientX - el.getBoundingClientRect().left;
+    let shiftY = e.clientY - el.getBoundingClientRect().top;
 
-// floating emojis
-const emojis = ["✨","🌸","💖","⭐","🌈",":3"];
-setInterval(() => {
-  let e = document.createElement("div");
-  e.className = "emoji";
-  e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
-  e.style.left = Math.random()*100+"vw";
-  e.style.animationDuration = (Math.random()*5+5)+"s";
-  document.body.appendChild(e);
+    function moveAt(pageX, pageY){
+      el.style.position='absolute';
+      el.style.left = pageX - shiftX + 'px';
+      el.style.top = pageY - shiftY + 'px';
+    }
 
-  setTimeout(() => e.remove(), 10000);
-}, 300);
+    function onMouseMove(e){
+      moveAt(e.pageX, e.pageY);
+    }
 
-// cursor trail
-document.addEventListener("mousemove", (e) => {
-  let t = document.createElement("div");
-  t.className = "trail";
-  t.style.left = e.clientX + "px";
-  t.style.top = e.clientY + "px";
-  document.body.appendChild(t);
-
-  setTimeout(() => t.remove(), 1000);
-});
-
-// random title chaos
-const titles = [
-  "whimsical chaos",
-  "hellwo :3",
-  "why are you here",
-  "adrian core",
-  "THIS SITE IS ALIVE"
-];
-setInterval(()=>{
-  document.title = titles[Math.floor(Math.random()*titles.length)];
-},2000);
-
-// click explosion
-document.addEventListener("click", (e)=>{
-  for(let i=0;i<10;i++){
-    let spark = document.createElement("div");
-    spark.className="trail";
-    spark.style.left = e.clientX+"px";
-    spark.style.top = e.clientY+"px";
-    spark.style.background = "yellow";
-    document.body.appendChild(spark);
-    setTimeout(()=>spark.remove(),1000);
+    document.addEventListener('mousemove', onMouseMove);
+    document.onmouseup = function(){
+      document.removeEventListener('mousemove', onMouseMove);
+      document.onmouseup = null;
+    }
   }
 });
+
+// DVD LOGO PHYSICS
+let dvd = document.getElementById("dvd");
+let x=100,y=100,dx=2,dy=2;
+
+function moveDVD(){
+  let w=window.innerWidth;
+  let h=window.innerHeight;
+
+  x+=dx;
+  y+=dy;
+
+  if(x+120>w||x<0) dx*=-1;
+  if(y+50>h||y<0) dy*=-1;
+
+  dvd.style.left=x+"px";
+  dvd.style.top=y+"px";
+
+  requestAnimationFrame(moveDVD);
+}
+moveDVD();
+
+// RANDOM VIRUS POPUP
+setInterval(()=>{
+  document.getElementById("virus").style.display="block";
+},15000);
+
+// MINI GAME
+let score=0;
+let target=document.getElementById("target");
+
+function moveTarget(){
+  target.style.left=Math.random()*200+"px";
+  target.style.top=Math.random()*200+"px";
+}
+
+target.onclick=()=>{
+  score++;
+  document.getElementById("score").innerText=score;
+  moveTarget();
+}
+
+moveTarget();
 </script>
 
 </body>
