@@ -1,29 +1,183 @@
+<!DOCTYPE html>
 <html>
-  <head>
-  <link rel="stylesheet" href="style.css" />
+<head>
+<meta charset="UTF-8">
+<title>whimsical chaos</title>
 
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-  </head>
-  <body>
-    <iframe width="500" height="500" src="https://www.youtube.com/embed/DLzxrzFCyOs?hl=en_US&version=3&rel=0&autoplay=1" frameborder="1" allowfullscreen></iframe>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-    <h1 class="animate__animated animate__bounce">T'boli stuff here</h1>
-    <h2> 67 is CORNY. PLEASE STOP. PLEASE. PLEASE. PLEASE. </h2>
-    <h3>- - - - - - - - - - - - -- -  adrian</h3>
-    <center><h1>hellwo! :3</h1></center>
+<style>
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", cursive;
+  background: linear-gradient(270deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+  background-size: 800% 800%;
+  animation: gradientShift 20s ease infinite;
+  overflow-x: hidden;
+  color: white;
+  text-shadow: 2px 2px 4px black;
+}
 
-    <h1> i genuienly suck at spelling and coding :sob: </h1>
+@keyframes gradientShift {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
 
-    <h1>Hi</h1>
-    <h1>Hi</h1>
-    <h1>Hi</h1>
-    <h1>Hi</h1>
-  </body>
+h1, h2, h3 {
+  text-align: center;
+  animation: floaty 3s ease-in-out infinite;
+}
 
-  
+@keyframes floaty {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
 
+iframe {
+  display: block;
+  margin: 20px auto;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255,255,255,0.7);
+}
+
+/* sparkle stars */
+.star {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle {
+  from {opacity: 0.2;}
+  to {opacity: 1;}
+}
+
+/* floating emojis */
+.emoji {
+  position: fixed;
+  font-size: 20px;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp {
+  from {transform: translateY(100vh);}
+  to {transform: translateY(-10vh);}
+}
+
+/* cursor trail */
+.trail {
+  position: fixed;
+  pointer-events: none;
+  width: 10px;
+  height: 10px;
+  background: pink;
+  border-radius: 50%;
+  animation: fadeOut 1s forwards;
+}
+
+@keyframes fadeOut {
+  to {opacity: 0; transform: scale(2);}
+}
+
+/* rainbow text */
+.rainbow {
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: rainbowMove 5s linear infinite;
+}
+
+@keyframes rainbowMove {
+  from {background-position: 0%;}
+  to {background-position: 200%;}
+}
+</style>
+</head>
+
+<body>
+
+<iframe width="500" height="500"
+src="https://www.youtube.com/embed/DLzxrzFCyOs?hl=en_US&version=3&rel=0&autoplay=1"
+frameborder="1" allowfullscreen></iframe>
+
+<h1 class="animate__animated animate__bounce rainbow">T'boli stuff here</h1>
+<h2>67 is CORNY. PLEASE STOP. PLEASE. PLEASE. PLEASE.</h2>
+<h1>who cares if ts looks bad its a personal site xDDDDD</h1>
+<h3>- - - - - - - - - - - - -- - adrian</h3>
+<center><h1 class="rainbow">hellwo! :3</h1></center>
+
+<h1>i genuienly suck at spelling and coding :sob:</h1>
+
+<h1>Hi</h1>
+<h1>Hi</h1>
+<h1>Hi</h1>
+<h1>Hi</h1>
+
+<script>
+// generate stars
+for (let i = 0; i < 80; i++) {
+  let star = document.createElement("div");
+  star.className = "star";
+  star.style.top = Math.random() * 100 + "vh";
+  star.style.left = Math.random() * 100 + "vw";
+  star.style.animationDuration = (Math.random()*2+1)+"s";
+  document.body.appendChild(star);
+}
+
+// floating emojis
+const emojis = ["✨","🌸","💖","⭐","🌈",":3"];
+setInterval(() => {
+  let e = document.createElement("div");
+  e.className = "emoji";
+  e.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left = Math.random()*100+"vw";
+  e.style.animationDuration = (Math.random()*5+5)+"s";
+  document.body.appendChild(e);
+
+  setTimeout(() => e.remove(), 10000);
+}, 300);
+
+// cursor trail
+document.addEventListener("mousemove", (e) => {
+  let t = document.createElement("div");
+  t.className = "trail";
+  t.style.left = e.clientX + "px";
+  t.style.top = e.clientY + "px";
+  document.body.appendChild(t);
+
+  setTimeout(() => t.remove(), 1000);
+});
+
+// random title chaos
+const titles = [
+  "whimsical chaos",
+  "hellwo :3",
+  "why are you here",
+  "adrian core",
+  "THIS SITE IS ALIVE"
+];
+setInterval(()=>{
+  document.title = titles[Math.floor(Math.random()*titles.length)];
+},2000);
+
+// click explosion
+document.addEventListener("click", (e)=>{
+  for(let i=0;i<10;i++){
+    let spark = document.createElement("div");
+    spark.className="trail";
+    spark.style.left = e.clientX+"px";
+    spark.style.top = e.clientY+"px";
+    spark.style.background = "yellow";
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),1000);
+  }
+});
+</script>
+
+</body>
 </html>
-
