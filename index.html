@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>chaos</title>
+<title>Windows XP Chaos</title>
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
@@ -10,153 +10,157 @@ href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/
 <style>
 body {
   margin: 0;
-  font-family: "Comic Sans MS", cursive;
-  background: linear-gradient(270deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
-  background-size: 800% 800%;
-  animation: gradientShift 20s ease infinite;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #008080;
   overflow: hidden;
   color: white;
-  text-shadow: 2px 2px 4px black;
 }
 
-@keyframes gradientShift {
-  0% {background-position:0% 50%;}
-  50% {background-position:100% 50%;}
-  100% {background-position:0% 50%;}
+/* windows */
+.window {
+  position: absolute;
+  background: #c0c0c0;
+  border: 2px solid #000;
+  box-shadow: 4px 4px #000;
 }
 
-h1,h2,h3 {
-  text-align:center;
-  cursor:grab;
+.titlebar {
+  background: linear-gradient(#000080, #0000cd);
+  color: white;
+  padding: 4px;
+  cursor: grab;
+  font-size: 14px;
 }
 
-iframe {
-  display:block;
-  margin:auto;
-  border-radius:20px;
-  box-shadow:0 0 30px white;
-  cursor:grab;
+.content {
+  padding: 10px;
+  color: black;
 }
 
-/* dvd logo */
+/* taskbar */
+#taskbar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+  background: #c0c0c0;
+  border-top: 2px solid #fff;
+}
+
+/* dvd */
 #dvd {
-  position:fixed;
-  width:120px;
-  top:100px;
-  left:100px;
-  font-size:20px;
-  font-weight:bold;
-  color:black;
-  background:white;
-  padding:10px;
-  border-radius:10px;
+  position: fixed;
+  width: 100px;
+  height: 40px;
+  background: yellow;
+  color: black;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
 }
 
-/* virus popup */
-#virus {
-  position:fixed;
-  top:30%;
-  left:30%;
-  background:black;
-  color:red;
-  padding:20px;
-  border:3px solid red;
-  display:none;
-  z-index:9999;
+/* cat */
+#cat {
+  position: fixed;
+  font-size: 30px;
+  pointer-events: none;
 }
 
-/* mini game */
-#game {
-  position:fixed;
-  bottom:10px;
-  right:10px;
-  background:black;
-  padding:10px;
-  border:2px solid white;
+/* start button */
+#start {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  background: green;
+  color: white;
+  padding: 3px 10px;
+  cursor: pointer;
 }
 
-#target {
-  width:50px;
-  height:50px;
-  background:red;
-  position:absolute;
-  cursor:pointer;
+/* popup */
+.popup {
+  position: absolute;
+  background: white;
+  border: 2px solid black;
+  padding: 10px;
+  color: black;
+}
+
+button {
+  cursor: pointer;
 }
 </style>
 </head>
 
 <body>
 
+<div id="dvd">DVD</div>
+<div id="cat">🐱</div>
+
+<div class="window" style="top:50px;left:50px;width:400px;">
+  <div class="titlebar">Internet Explorer.exe</div>
+  <div class="content">
+    <iframe width="100%" height="200"
+    src="https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1"></iframe>
+
+    <h1 class="animate__animated animate__bounce">T'boli stuff here</h1>
+    <h1>who cares if ts looks bad its a personal site xDDDDD</h1>
+    <h3>- - - - - - - - - - - - -- - adrian</h3>
+    <h1>hellwo! :3</h1>
+    <h1>i genuienly suck at spelling and coding :sob:</h1>
+    <h1>Hi</h1>
+    <h1>Hi</h1>
+    <h1>Hi</h1>
+    <h1>Hi</h1>
+  </div>
+</div>
+
+<div id="taskbar">
+  <div id="start">Start</div>
+</div>
+
 <audio autoplay loop>
 <source src="https://www.myinstants.com/media/sounds/trololo.mp3">
 </audio>
 
-<div id="virus">
-⚠️ VIRUS DETECTED ⚠️<br>
-Deleting system32...<br>
-Just kidding lol 😭<br>
-<button onclick="document.getElementById('virus').style.display='none'">close</button>
-</div>
-
-<div id="dvd">DVD</div>
-
-<iframe width="400" height="300"
-src="https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1">
-</iframe>
-
-<h1 class="animate__animated animate__bounce">T'boli stuff here</h1>
-<h1>who cares if ts looks bad its a personal site xDDDDD</h1>
-<h3>- - - - - - - - - - - - -- - adrian</h3>
-<h1>hellwo! :3</h1>
-<h1>i genuienly suck at spelling and coding :sob:</h1>
-<h1>Hi</h1>
-<h1>Hi</h1>
-<h1>Hi</h1>
-<h1>Hi</h1>
-
-<div id="game">
-score: <span id="score">0</span>
-<div id="target"></div>
-</div>
-
 <script>
-// DRAG EVERYTHING
-document.querySelectorAll("h1,h2,h3,iframe,#dvd").forEach(el=>{
-  el.onmousedown = function(e){
-    let shiftX = e.clientX - el.getBoundingClientRect().left;
-    let shiftY = e.clientY - el.getBoundingClientRect().top;
+// DRAG WINDOWS
+document.querySelectorAll(".window").forEach(win=>{
+  let bar = win.querySelector(".titlebar");
 
-    function moveAt(pageX, pageY){
-      el.style.position='absolute';
-      el.style.left = pageX - shiftX + 'px';
-      el.style.top = pageY - shiftY + 'px';
+  bar.onmousedown = function(e){
+    let shiftX = e.clientX - win.offsetLeft;
+    let shiftY = e.clientY - win.offsetTop;
+
+    function moveAt(x,y){
+      win.style.left = x - shiftX + "px";
+      win.style.top = y - shiftY + "px";
     }
 
-    function onMouseMove(e){
-      moveAt(e.pageX, e.pageY);
+    function onMove(e){
+      moveAt(e.pageX,e.pageY);
     }
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.onmouseup = function(){
-      document.removeEventListener('mousemove', onMouseMove);
-      document.onmouseup = null;
+    document.addEventListener("mousemove", onMove);
+
+    document.onmouseup = ()=>{
+      document.removeEventListener("mousemove", onMove);
+      document.onmouseup=null;
     }
   }
 });
 
-// DVD LOGO PHYSICS
-let dvd = document.getElementById("dvd");
-let x=100,y=100,dx=2,dy=2;
+// DVD bounce
+let dvd=document.getElementById("dvd");
+let x=100,y=100,dx=3,dy=3;
 
 function moveDVD(){
-  let w=window.innerWidth;
-  let h=window.innerHeight;
+  let w=innerWidth;
+  let h=innerHeight;
+  x+=dx; y+=dy;
 
-  x+=dx;
-  y+=dy;
-
-  if(x+120>w||x<0) dx*=-1;
-  if(y+50>h||y<0) dy*=-1;
+  if(x+100>w||x<0) dx*=-1;
+  if(y+40>h||y<0) dy*=-1;
 
   dvd.style.left=x+"px";
   dvd.style.top=y+"px";
@@ -165,27 +169,69 @@ function moveDVD(){
 }
 moveDVD();
 
-// RANDOM VIRUS POPUP
+// CAT FOLLOW
+let cat=document.getElementById("cat");
+document.addEventListener("mousemove", e=>{
+  cat.style.left = e.clientX + 10 + "px";
+  cat.style.top = e.clientY + 10 + "px";
+});
+
+// RANDOM POPUPS
+function createPopup(){
+  let p=document.createElement("div");
+  p.className="popup";
+  p.style.left=Math.random()*innerWidth+"px";
+  p.style.top=Math.random()*innerHeight+"px";
+  p.innerHTML="⚠️ virus detected<br><button>ok</button>";
+  p.querySelector("button").onclick=()=>p.remove();
+  document.body.appendChild(p);
+}
+
+setInterval(createPopup,7000);
+
+// START BUTTON CHAOS
+document.getElementById("start").onclick=()=>{
+  for(let i=0;i<5;i++) createPopup();
+};
+
+// CLICK SPAM EFFECT
+document.addEventListener("click",e=>{
+  let spark=document.createElement("div");
+  spark.style.position="fixed";
+  spark.style.left=e.clientX+"px";
+  spark.style.top=e.clientY+"px";
+  spark.innerText="✨";
+  document.body.appendChild(spark);
+  setTimeout(()=>spark.remove(),1000);
+});
+
+// RANDOM WINDOW SPAWNER
 setInterval(()=>{
-  document.getElementById("virus").style.display="block";
-},15000);
+  let w=document.createElement("div");
+  w.className="window";
+  w.style.top=Math.random()*300+"px";
+  w.style.left=Math.random()*300+"px";
+  w.style.width="200px";
 
-// MINI GAME
-let score=0;
-let target=document.getElementById("target");
+  w.innerHTML=`
+  <div class="titlebar">error.exe</div>
+  <div class="content">something broke lol</div>
+  `;
+  document.body.appendChild(w);
+},12000);
 
-function moveTarget(){
-  target.style.left=Math.random()*200+"px";
-  target.style.top=Math.random()*200+"px";
-}
+// SCREEN SHAKE
+setInterval(()=>{
+  document.body.style.transform="translate("+(Math.random()*5-2)+"px,"+(Math.random()*5-2)+"px)";
+  setTimeout(()=>document.body.style.transform="",100);
+},5000);
 
-target.onclick=()=>{
-  score++;
-  document.getElementById("score").innerText=score;
-  moveTarget();
-}
+// TITLE CHAOS
+const titles=["Windows XP","virus???","adrian core","help","real"];
+setInterval(()=>{
+  document.title=titles[Math.floor(Math.random()*titles.length)];
+},2000);
 
-moveTarget();
 </script>
 
 </body>
