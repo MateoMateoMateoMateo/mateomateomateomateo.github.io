@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <meta charset="UTF-8">
 <title>XP CHAOS OS</title>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <style>
 body {
@@ -27,24 +28,12 @@ body {
   z-index:9999;
 }
 
-/* bsod */
-#bsod {
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:#0000aa;
-  color:white;
-  display:none;
-  z-index:9999;
-  padding:20px;
-  font-family: monospace;
-}
-
-/* window */
+/* windows */
 .window {
   position:absolute;
   background:#c0c0c0;
   border:2px solid black;
+  box-shadow:4px 4px black;
 }
 
 .titlebar {
@@ -52,6 +41,7 @@ body {
   color:white;
   padding:4px;
   cursor:grab;
+  font-size:14px;
 }
 
 .content {
@@ -59,25 +49,13 @@ body {
   color:black;
 }
 
-#cat {
-  position:fixed;
-  font-size:30px;
-}
-
-/* minesweeper */
-#mine {
-  display:grid;
-  grid-template-columns: repeat(5,40px);
-  gap:2px;
-}
-.cell {
-  width:40px;
-  height:40px;
-  background:#aaa;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  cursor:pointer;
+/* icons */
+.icon {
+  position:absolute;
+  width:80px;
+  text-align:center;
+  color:white;
+  cursor:grab;
 }
 
 /* taskbar */
@@ -87,27 +65,76 @@ body {
   width:100%;
   height:30px;
   background:#c0c0c0;
+  border-top:2px solid #fff;
+}
+
+/* start */
+#start {
+  position:absolute;
+  left:5px;
+  top:5px;
+  background:green;
+  color:white;
+  padding:3px 10px;
+  cursor:pointer;
+}
+
+/* right click menu */
+#menu {
+  position:fixed;
+  background:white;
+  border:1px solid black;
+  display:none;
+  z-index:9999;
+}
+
+/* cat */
+#cat {
+  position:fixed;
+  font-size:28px;
+  pointer-events:none;
+}
+
+/* clippy */
+#clippy {
+  position:fixed;
+  bottom:40px;
+  right:10px;
+  background:white;
+  border:1px solid black;
+  padding:5px;
+  font-size:12px;
+}
+
+/* clock */
+#clock {
+  position:absolute;
+  right:10px;
+  top:5px;
+  font-size:12px;
 }
 </style>
 </head>
 
 <body>
-      <form action="?" method="POST">
-<div class="g-recaptcha" data-sitekey="6Lf6HJcsAAAAACGxKG3WOdZ5iV1r59PgD7VZ3c_Z"></div>
-<br/>
-<input type="submit" value="Submit">
-</form>
-  </div>
-</div>
-<div id="boot">Starting Windows XP...</div>
 
-<div id="bsod">
-A problem has been detected 😭<br><br>
-Press refresh to continue
-</div>
+<div id="boot">Starting Windows XP...</div>
 
 <div id="cat">🐱</div>
 
+<div id="menu">
+  <div onclick="spawnWindow()">New Window</div>
+  <div onclick="alert('nothing here lol')">Refresh</div>
+</div>
+
+<div id="clippy">📎 hi i am clippy do u need help</div>
+
+<div id="taskbar">
+  <div id="start">Start</div>
+  <div id="clock"></div>
+</div>
+
+<!-- main window -->
 <div class="window" style="top:50px;left:50px;width:400px;">
   <div class="titlebar">Internet Explorer</div>
   <div class="content">
@@ -120,8 +147,11 @@ Press refresh to continue
     <h1>hellwo! :3</h1>
     <h1>i genuienly suck at spelling and coding :sob:</h1>
     <h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1>
+  </div>
+</div>
 
-<div class="window" style="top:100px;left:500px;width:300px;">
+<!-- file explorer -->
+<div class="window" style="top:100px;left:500px;width:250px;">
   <div class="titlebar">File Explorer</div>
   <div class="content">
     📁 memes<br>
@@ -130,6 +160,7 @@ Press refresh to continue
   </div>
 </div>
 
+<!-- browser -->
 <div class="window" style="top:300px;left:500px;width:300px;">
   <div class="titlebar">Mini Browser</div>
   <div class="content">
@@ -139,24 +170,22 @@ Press refresh to continue
   </div>
 </div>
 
-<div class="window" style="top:300px;left:50px;width:250px;">
-  <div class="titlebar">Minesweeper</div>
+<!-- captcha window -->
+<div class="window" style="top:200px;left:200px;width:300px;">
+  <div class="titlebar">Are you human?</div>
   <div class="content">
-    <div id="mine"></div>
+    <form action="?" method="POST">
+      <div class="g-recaptcha" data-sitekey="6Lf6HJcsAAAAACGxKG3WOdZ5iV1r59PgD7VZ3c_Z"></div>
+      <br/>
+      <input type="submit" value="Submit">
+    </form>
   </div>
 </div>
 
-<div id="taskbar"></div>
-
-<audio id="startSound">
-<source src="https://www.myinstants.com/media/sounds/windows-xp-startup.mp3">
-</audio>
-
 <script>
-// boot screen
+// boot
 setTimeout(()=>{
   document.getElementById("boot").style.display="none";
-  document.getElementById("startSound").play();
 },3000);
 
 // drag windows
@@ -181,37 +210,64 @@ document.querySelectorAll(".window").forEach(win=>{
 // cat follow
 document.addEventListener("mousemove",e=>{
   let cat=document.getElementById("cat");
-  cat.style.left=e.clientX+"px";
-  cat.style.top=e.clientY+"px";
+  cat.style.left=e.clientX+10+"px";
+  cat.style.top=e.clientY+10+"px";
 });
-
-// minesweeper
-let mine=document.getElementById("mine");
-for(let i=0;i<25;i++){
-  let c=document.createElement("div");
-  c.className="cell";
-  c.onclick=()=>{
-    if(Math.random()<0.2){
-      document.getElementById("bsod").style.display="block";
-    } else {
-      c.innerText="😀";
-    }
-  };
-  mine.appendChild(c);
-}
 
 // browser
 function go(){
   let url=document.getElementById("url").value;
+  if(!url.startsWith("http")) url="https://"+url;
   document.getElementById("browser").src=url;
 }
 
-// random BSOD
+// clock
 setInterval(()=>{
-  if(Math.random()<0.1){
-    document.getElementById("bsod").style.display="block";
-  }
-},10000);
+  let d=new Date();
+  document.getElementById("clock").innerText=d.toLocaleTimeString();
+},1000);
+
+// right click
+document.addEventListener("contextmenu",e=>{
+  e.preventDefault();
+  let m=document.getElementById("menu");
+  m.style.display="block";
+  m.style.left=e.clientX+"px";
+  m.style.top=e.clientY+"px";
+});
+
+document.addEventListener("click",()=>{
+  document.getElementById("menu").style.display="none";
+});
+
+// spawn windows
+function spawnWindow(){
+  let w=document.createElement("div");
+  w.className="window";
+  w.style.top=Math.random()*300+"px";
+  w.style.left=Math.random()*300+"px";
+  w.style.width="200px";
+
+  w.innerHTML=`
+  <div class="titlebar">error.exe</div>
+  <div class="content">something broke lol</div>
+  `;
+  document.body.appendChild(w);
+}
+
+// clippy messages
+const tips=[
+  "try clicking things",
+  "this is definitely safe",
+  "do not trust the file explorer",
+  "why are you here",
+  "you are doing great 😭"
+];
+
+setInterval(()=>{
+  document.getElementById("clippy").innerText="📎 "+tips[Math.floor(Math.random()*tips.length)];
+},4000);
+
 </script>
 
 </body>
