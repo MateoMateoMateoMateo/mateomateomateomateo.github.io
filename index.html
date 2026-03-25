@@ -2,237 +2,211 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Windows XP Chaos</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<title>XP CHAOS OS</title>
 
 <style>
 body {
-  margin: 0;
+  margin:0;
   font-family: Tahoma, Arial, sans-serif;
-  background: #008080;
-  overflow: hidden;
-  color: white;
+  background:#008080;
+  overflow:hidden;
 }
 
-/* windows */
+/* boot screen */
+#boot {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  color:lime;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:30px;
+  z-index:9999;
+}
+
+/* bsod */
+#bsod {
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:#0000aa;
+  color:white;
+  display:none;
+  z-index:9999;
+  padding:20px;
+  font-family: monospace;
+}
+
+/* window */
 .window {
-  position: absolute;
-  background: #c0c0c0;
-  border: 2px solid #000;
-  box-shadow: 4px 4px #000;
+  position:absolute;
+  background:#c0c0c0;
+  border:2px solid black;
 }
 
 .titlebar {
-  background: linear-gradient(#000080, #0000cd);
-  color: white;
-  padding: 4px;
-  cursor: grab;
-  font-size: 14px;
+  background:#000080;
+  color:white;
+  padding:4px;
+  cursor:grab;
 }
 
 .content {
-  padding: 10px;
-  color: black;
+  padding:10px;
+  color:black;
+}
+
+#cat {
+  position:fixed;
+  font-size:30px;
+}
+
+/* minesweeper */
+#mine {
+  display:grid;
+  grid-template-columns: repeat(5,40px);
+  gap:2px;
+}
+.cell {
+  width:40px;
+  height:40px;
+  background:#aaa;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
 }
 
 /* taskbar */
 #taskbar {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 30px;
-  background: #c0c0c0;
-  border-top: 2px solid #fff;
-}
-
-/* dvd */
-#dvd {
-  position: fixed;
-  width: 100px;
-  height: 40px;
-  background: yellow;
-  color: black;
-  text-align: center;
-  line-height: 40px;
-  font-weight: bold;
-}
-
-/* cat */
-#cat {
-  position: fixed;
-  font-size: 30px;
-  pointer-events: none;
-}
-
-/* start button */
-#start {
-  position: absolute;
-  left: 5px;
-  top: 5px;
-  background: green;
-  color: white;
-  padding: 3px 10px;
-  cursor: pointer;
-}
-
-/* popup */
-.popup {
-  position: absolute;
-  background: white;
-  border: 2px solid black;
-  padding: 10px;
-  color: black;
-}
-
-button {
-  cursor: pointer;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  height:30px;
+  background:#c0c0c0;
 }
 </style>
 </head>
 
 <body>
 
-<div id="dvd">DVD</div>
+<div id="boot">Starting Windows XP...</div>
+
+<div id="bsod">
+A problem has been detected 😭<br><br>
+Press refresh to continue
+</div>
+
 <div id="cat">🐱</div>
 
 <div class="window" style="top:50px;left:50px;width:400px;">
-  <div class="titlebar">Internet Explorer.exe</div>
+  <div class="titlebar">Internet Explorer</div>
   <div class="content">
     <iframe width="100%" height="200"
     src="https://www.youtube.com/embed/DLzxrzFCyOs?autoplay=1"></iframe>
 
-    <h1 class="animate__animated animate__bounce">T'boli stuff here</h1>
+    <h1>T'boli stuff here</h1>
     <h1>who cares if ts looks bad its a personal site xDDDDD</h1>
     <h3>- - - - - - - - - - - - -- - adrian</h3>
     <h1>hellwo! :3</h1>
     <h1>i genuienly suck at spelling and coding :sob:</h1>
-    <h1>castiel was here</h1>
-    <h1>Hi</h1>
-    <h1>Hi</h1>
-    <h1>Hi</h1>
-    <h1>Hi</h1>
+    <h1>Hi</h1><h1>Hi</h1><h1>Hi</h1><h1>Hi</h1>
   </div>
 </div>
 
-<div id="taskbar">
-  <div id="start">Start</div>
+<div class="window" style="top:100px;left:500px;width:300px;">
+  <div class="titlebar">File Explorer</div>
+  <div class="content">
+    📁 memes<br>
+    📁 homework (empty lol)<br>
+    📄 totally_not_virus.exe<br>
+  </div>
 </div>
 
-<audio autoplay loop>
-<source src="https://www.myinstants.com/media/sounds/trololo.mp3">
+<div class="window" style="top:300px;left:500px;width:300px;">
+  <div class="titlebar">Mini Browser</div>
+  <div class="content">
+    <input id="url" placeholder="enter url">
+    <button onclick="go()">go</button>
+    <iframe id="browser" width="100%" height="150"></iframe>
+  </div>
+</div>
+
+<div class="window" style="top:300px;left:50px;width:250px;">
+  <div class="titlebar">Minesweeper</div>
+  <div class="content">
+    <div id="mine"></div>
+  </div>
+</div>
+
+<div id="taskbar"></div>
+
+<audio id="startSound">
+<source src="https://www.myinstants.com/media/sounds/windows-xp-startup.mp3">
 </audio>
 
 <script>
-// DRAG WINDOWS
+// boot screen
+setTimeout(()=>{
+  document.getElementById("boot").style.display="none";
+  document.getElementById("startSound").play();
+},3000);
+
+// drag windows
 document.querySelectorAll(".window").forEach(win=>{
-  let bar = win.querySelector(".titlebar");
+  let bar=win.querySelector(".titlebar");
+  bar.onmousedown=e=>{
+    let x=e.clientX-win.offsetLeft;
+    let y=e.clientY-win.offsetTop;
 
-  bar.onmousedown = function(e){
-    let shiftX = e.clientX - win.offsetLeft;
-    let shiftY = e.clientY - win.offsetTop;
-
-    function moveAt(x,y){
-      win.style.left = x - shiftX + "px";
-      win.style.top = y - shiftY + "px";
+    function move(e){
+      win.style.left=e.pageX-x+"px";
+      win.style.top=e.pageY-y+"px";
     }
 
-    function onMove(e){
-      moveAt(e.pageX,e.pageY);
-    }
-
-    document.addEventListener("mousemove", onMove);
-
-    document.onmouseup = ()=>{
-      document.removeEventListener("mousemove", onMove);
-      document.onmouseup=null;
+    document.addEventListener("mousemove",move);
+    document.onmouseup=()=>{
+      document.removeEventListener("mousemove",move);
     }
   }
 });
 
-// DVD bounce
-let dvd=document.getElementById("dvd");
-let x=100,y=100,dx=3,dy=3;
-
-function moveDVD(){
-  let w=innerWidth;
-  let h=innerHeight;
-  x+=dx; y+=dy;
-
-  if(x+100>w||x<0) dx*=-1;
-  if(y+40>h||y<0) dy*=-1;
-
-  dvd.style.left=x+"px";
-  dvd.style.top=y+"px";
-
-  requestAnimationFrame(moveDVD);
-}
-moveDVD();
-
-// CAT FOLLOW
-let cat=document.getElementById("cat");
-document.addEventListener("mousemove", e=>{
-  cat.style.left = e.clientX + 10 + "px";
-  cat.style.top = e.clientY + 10 + "px";
+// cat follow
+document.addEventListener("mousemove",e=>{
+  let cat=document.getElementById("cat");
+  cat.style.left=e.clientX+"px";
+  cat.style.top=e.clientY+"px";
 });
 
-// RANDOM POPUPS
-function createPopup(){
-  let p=document.createElement("div");
-  p.className="popup";
-  p.style.left=Math.random()*innerWidth+"px";
-  p.style.top=Math.random()*innerHeight+"px";
-  p.innerHTML="⚠️ virus detected also castiels-snake-game.netlify.app/<br><button>ok</button>";
-  p.querySelector("button").onclick=()=>p.remove();
-  document.body.appendChild(p);
+// minesweeper
+let mine=document.getElementById("mine");
+for(let i=0;i<25;i++){
+  let c=document.createElement("div");
+  c.className="cell";
+  c.onclick=()=>{
+    if(Math.random()<0.2){
+      document.getElementById("bsod").style.display="block";
+    } else {
+      c.innerText="😀";
+    }
+  };
+  mine.appendChild(c);
 }
 
-setInterval(createPopup,7000);
+// browser
+function go(){
+  let url=document.getElementById("url").value;
+  document.getElementById("browser").src=url;
+}
 
-// START BUTTON CHAOS
-document.getElementById("start").onclick=()=>{
-  for(let i=0;i<5;i++) createPopup();
-};
-
-// CLICK SPAM EFFECT
-document.addEventListener("click",e=>{
-  let spark=document.createElement("div");
-  spark.style.position="fixed";
-  spark.style.left=e.clientX+"px";
-  spark.style.top=e.clientY+"px";
-  spark.innerText="✨";
-  document.body.appendChild(spark);
-  setTimeout(()=>spark.remove(),1000);
-});
-
-// RANDOM WINDOW SPAWNER
+// random BSOD
 setInterval(()=>{
-  let w=document.createElement("div");
-  w.className="window";
-  w.style.top=Math.random()*300+"px";
-  w.style.left=Math.random()*300+"px";
-  w.style.width="200px";
-
-  w.innerHTML=`
-  <div class="titlebar">error.exe</div>
-  <div class="content">something broke lol</div>
-  `;
-  document.body.appendChild(w);
-},12000);
-
-// SCREEN SHAKE
-setInterval(()=>{
-  document.body.style.transform="translate("+(Math.random()*5-2)+"px,"+(Math.random()*5-2)+"px)";
-  setTimeout(()=>document.body.style.transform="",100);
-},5000);
-
-// TITLE CHAOS
-const titles=["Windows XP","virus???","adrian core","help","real"];
-setInterval(()=>{
-  document.title=titles[Math.floor(Math.random()*titles.length)];
-},2000);
-
+  if(Math.random()<0.1){
+    document.getElementById("bsod").style.display="block";
+  }
+},10000);
 </script>
 
 </body>
