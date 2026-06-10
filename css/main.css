@@ -1,119 +1,55 @@
 body {
-    margin: 0;
+    margin: 40px auto;
+    max-width: 720px;
 
     font-family: Tahoma, Verdana, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+
+    color: #111;
+    background: #eef5ff;
+}
+
+/* headings = minimal, not “designed UI” */
+h1 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+h2 {
     font-size: 14px;
-
-    background:
-        linear-gradient(to bottom, #bfe7ff, #e9f7ff);
-
-    color: #1f2a3a;
-}
-
-#container {
-    width: 1000px;
-    margin: 30px auto;
-
-    display: flex;
-    gap: 20px;
-}
-
-/* SIDEBAR */
-#sidebar {
-    width: 240px;
-}
-
-#sidebar h1 {
-    margin: 0;
-    font-size: 28px;
-    color: #0b4d8d;
-}
-
-.tagline {
-    opacity: 0.7;
-}
-
-nav {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #0057b8;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-.box {
-    margin-top: 15px;
-    padding: 10px;
-
-    background: rgba(255,255,255,0.6);
-    border: 1px solid #9cc7e8;
-    border-radius: 8px;
-}
-
-/* MAIN WINDOWS */
-main {
-    flex: 1;
-}
-
-.window {
-    margin-bottom: 20px;
-
-    border: 1px solid #8fbde5;
-    border-radius: 8px;
-
-    background: rgba(255,255,255,0.7);
-
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-
-    overflow: hidden;
-}
-
-.titlebar {
-    padding: 8px 12px;
-
-    background: linear-gradient(#66b6ff, #2f80d8);
-    color: white;
+    margin-top: 24px;
+    margin-bottom: 8px;
     font-weight: bold;
 }
 
-.content {
-    padding: 14px;
+/* subtle separation */
+hr {
+    border: none;
+    border-top: 1px solid #c7c7c7;
+    margin: 18px 0;
 }
 
-.project {
-    margin-bottom: 12px;
-}
-
-.project b {
-    display: block;
-    margin-bottom: 3px;
-}
-
-/* LINKS */
+/* links = old web simple blue */
 a {
-    color: #0a5bd3;
+    color: #0645ad;
+    text-decoration: none;
 }
 
-/* 🐱 ONEKO */
-#oneko {
-    position: fixed;
-    width: 32px;
-    height: 32px;
+a:hover {
+    text-decoration: underline;
+}
 
-    pointer-events: none;
-    z-index: 999999;
+/* slightly muted subtitle */
+.sub {
+    margin-top: 0;
+    color: #444;
+}
 
-    image-rendering: pixelated;
-
-    transform: translate(-16px, -16px);
-
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+/* footer = slightly faded */
+.footer {
+    color: #666;
+    font-size: 12px;
+    margin-top: 30px;
 }
