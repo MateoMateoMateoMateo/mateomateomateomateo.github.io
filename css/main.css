@@ -1,55 +1,22 @@
 body {
-    margin: 40px auto;
-    max-width: 720px;
-
+    background: #c0c0c0; /* classic win95-ish neutral */
     font-family: Tahoma, Verdana, sans-serif;
     font-size: 13px;
-    line-height: 1.5;
-
-    color: #111;
-    background: #eef5ff;
 }
 
-/* headings = minimal, not “designed UI” */
-h1 {
-    font-size: 26px;
-    font-weight: bold;
-    margin-bottom: 4px;
+/* optional: stop everything from being perfectly centered */
+.container {
+    margin: 20px;
 }
 
-h2 {
-    font-size: 14px;
-    margin-top: 24px;
-    margin-bottom: 8px;
-    font-weight: bold;
-}
-
-/* subtle separation */
-hr {
-    border: none;
-    border-top: 1px solid #c7c7c7;
-    margin: 18px 0;
-}
-
-/* links = old web simple blue */
-a {
-    color: #0645ad;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* slightly muted subtitle */
-.sub {
-    margin-top: 0;
-    color: #444;
-}
-
-/* footer = slightly faded */
+/* tiny personal tweaks only */
 .footer {
-    color: #666;
-    font-size: 12px;
-    margin-top: 30px;
+    margin-top: 40px;
+    font-size: 11px;
+    color: #333;
+}
+
+/* optional slight spacing chaos (vmfunc energy) */
+.window {
+    margin-bottom: 18px;
 }
