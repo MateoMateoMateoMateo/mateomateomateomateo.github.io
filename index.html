@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>mateo ^_^</title>
 
 <link rel="stylesheet" href="https://unpkg.com/xp.css@0.2.6/dist/XP.css">
@@ -11,80 +12,115 @@
 
 <body>
 
-<!-- header (NOT a window on purpose) -->
-<h1>mateo ^_^</h1>
+<div class="window main-window">
 
-<p>
-student • programmer • builder
-</p>
-
-<hr>
-
-<!-- natural text section -->
-<p>
-i make operating systems, neural networks, game AIs,
-and other software that occasionally works.
-</p>
-
-<!-- XP WINDOW used sparingly (this is the correct usage) -->
-<div class="window" style="width: 360px; margin: 20px 0;">
   <div class="title-bar">
-    <div class="title-bar-text">projects.log</div>
+    <div class="title-bar-text">
+      mateo.exe
+    </div>
   </div>
 
   <div class="window-body">
-    <p><b>FlappyBirdOS</b> — bootable OS</p>
-    <p><b>NeuralChess</b> — chess engine</p>
-    <p><b>DinoAI</b> — RL agent</p>
-  </div>
-</div>
 
-<hr>
+    <div class="tabs">
 
-<!-- raw text section again (important contrast) -->
-<p>
-currently debugging reality simulator.<br>
+      <input type="radio" name="tab" id="home" checked>
+      <label for="home">Home</label>
+
+      <input type="radio" name="tab" id="projects">
+      <label for="projects">Projects</label>
+
+      <input type="radio" name="tab" id="links">
+      <label for="links">Links</label>
+
+      <input type="radio" name="tab" id="status">
+      <label for="status">Status</label>
+
+      <div class="tab-content" id="home-content">
+        <h1>mateo ^_^</h1>
+
+        <p>
+          student • programmer • builder
+        </p>
+
+        <p>
+          i make operating systems, neural networks,
+          game AIs, and other software that occasionally works.
+        </p>
+
+        <p class="small">
+          hosted on uwu.hs.vc<br>
+          dns via freedns
+        </p>
+      </div>
+
+      <div class="tab-content" id="projects-content">
+        <h3>projects.log</h3>
+
+        <ul>
+          <li>
+            <a href="#">
+              FlappyBirdOS
+            </a><br>
+            bootable operating system
+          </li>
+
+          <li>
+            <a href="#">
+              NeuralChess
+            </a><br>
+            chess engine
+          </li>
+
+          <li>
+            <a href="#">
+              DinoAI
+            </a><br>
+            reinforcement learning agent
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-content" id="links-content">
+        <h3>links</h3>
+
+        <ul>
+          <li>
+            <a href="https://github.com/MateoMateoMateoMateo">
+              github
+            </a>
+          </li>
+
+          <li>
+            <a href="mailto:you@example.com">
+              email
+            </a>
+          </li>
+        </ul>
+
+        <img
+          src="https://lina.sh/assets/88x31/jammin.webp"
+          alt="badge"
+        >
+      </div>
+
+      <div class="tab-content" id="status-content">
+<pre>
+system: unstable
+brain: compiling
+motivation: undefined
+
+currently debugging reality simulator.
 sometimes it segfaults for no reason.
-</p>
+</pre>
+      </div>
 
-<!-- another SMALL XP artifact (not everything boxed!!) -->
-<div class="window" style="width: 260px; margin: 20px 0;">
-  <div class="title-bar">
-    <div class="title-bar-text">status.txt</div>
+    </div>
+
   </div>
 
-  <div class="window-body">
-    system: unstable<br>
-    brain: compiling<br>
-    motivation: undefined
-  </div>
 </div>
 
-<hr>
-
-<h2>links</h2>
-
-<p>
-<a href="https://github.com/">github</a><br>
-<a href="mailto:example@gmail.com">email</a>
-</p>
-
-<hr>
-
-<!-- artifact-style badge (NOT aligned into layout) -->
-<p>random internet relic:</p>
-
-<a href="https://we-are-jammin.xyz">
-  <img src="https://lina.sh/assets/88x31/jammin.webp">
-</a>
-
-<hr>
-
-<p style="font-size: 11px; opacity: 0.7;">
-built with html, xp.css, caffeine, and questionable decisions
-</p>
-
-<!-- oneko stays last -->
 <script src="js/oneko.js" data-cat="assets/oneko.gif"></script>
 
 </body>
