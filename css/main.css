@@ -1,22 +1,54 @@
 body {
-    background: #c0c0c0; /* classic win95-ish neutral */
-    font-family: Tahoma, Verdana, sans-serif;
-    font-size: 13px;
+    background: #008080;
+    padding: 30px;
+    font-family: Tahoma, sans-serif;
 }
 
-/* optional: stop everything from being perfectly centered */
-.container {
-    margin: 20px;
+.main-window {
+    max-width: 700px;
+    margin: auto;
 }
 
-/* tiny personal tweaks only */
-.footer {
-    margin-top: 40px;
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.tabs input {
+    display: none;
+}
+
+.tabs label {
+    padding: 4px 12px;
+    cursor: pointer;
+    border: 1px solid #808080;
+    background: #c0c0c0;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    padding-top: 16px;
+}
+
+#home:checked ~ #home-content,
+#projects:checked ~ #projects-content,
+#links:checked ~ #links-content,
+#status:checked ~ #status-content {
+    display: block;
+}
+
+.small {
     font-size: 11px;
-    color: #333;
+    opacity: 0.7;
 }
 
-/* optional slight spacing chaos (vmfunc energy) */
-.window {
-    margin-bottom: 18px;
+ul {
+    padding-left: 20px;
+}
+
+pre {
+    font-family: inherit;
+    white-space: pre-wrap;
 }
