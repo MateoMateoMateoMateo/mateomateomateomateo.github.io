@@ -1,18 +1,40 @@
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes windowPop {
+    from { opacity: 0; transform: scale(0.97); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
 body {
     background: #008080;
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.04) 0, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(0,0,0,0.06) 0, transparent 40%);
     padding: 30px;
     font-family: Tahoma, sans-serif;
+    min-height: 100vh;
+    box-sizing: border-box;
 }
 
 .main-window {
     max-width: 700px;
     margin: auto;
+    animation: windowPop 0.25s ease-out;
+}
+
+.window-body {
+    padding: 12px 14px 16px;
 }
 
 .tabs {
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
+    border-bottom: 1px solid #808080;
+    padding-bottom: 0;
 }
 
 .tabs input {
@@ -20,10 +42,33 @@ body {
 }
 
 .tabs label {
-    padding: 4px 12px;
+    padding: 5px 14px;
     cursor: pointer;
     border: 1px solid #808080;
+    border-bottom: none;
     background: #c0c0c0;
+    position: relative;
+    top: 1px;
+    transition: background 0.12s ease, transform 0.12s ease;
+    user-select: none;
+}
+
+.tabs label:hover {
+    background: #d4d4d4;
+}
+
+.tabs label:active {
+    transform: translateY(1px);
+}
+
+/* active tab look */
+#home:checked ~ label[for="home"],
+#projects:checked ~ label[for="projects"],
+#links:checked ~ label[for="links"],
+#status:checked ~ label[for="status"] {
+    background: #fff;
+    border-bottom: 1px solid #fff;
+    font-weight: bold;
 }
 
 .tab-content {
@@ -37,6 +82,15 @@ body {
 #links:checked ~ #links-content,
 #status:checked ~ #status-content {
     display: block;
+    animation: fadeIn 0.18s ease-out;
+}
+
+h1, h3 {
+    margin-top: 0;
+}
+
+.tab-content p {
+    line-height: 1.5;
 }
 
 .small {
@@ -48,7 +102,47 @@ ul {
     padding-left: 20px;
 }
 
+li {
+    margin-bottom: 10px;
+}
+
+a, .project-link {
+    color: #0000ee;
+    text-decoration: none;
+}
+
+a:hover, .project-link:hover {
+    text-decoration: underline;
+}
+
 pre {
-    font-family: inherit;
+    font-family: 'Courier New', monospace;
     white-space: pre-wrap;
+    background: #000;
+    color: #0f0;
+    padding: 10px;
+    border: 1px solid #808080;
+    margin: 0;
+}
+
+#links-content img {
+    margin-top: 12px;
+    display: block;
+}
+
+/* scrollbar flavor, webkit only */
+::-webkit-scrollbar {
+    width: 14px;
+}
+::-webkit-scrollbar-track {
+    background: #c0c0c0;
+}
+::-webkit-scrollbar-thumb {
+    background: #808080;
+    border: 2px solid #c0c0c0;
+}
+
+@media (max-width: 480px) {
+    body { padding: 12px; }
+    .tabs label { padding: 5px 10px; font-size: 13px; }
 }
