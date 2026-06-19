@@ -1,0 +1,64 @@
+name: Update Discord Presence
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Updates automatically every 5 minutes
+  workflow_dispatch: # Allows manual testing
+
+jobs:
+  update-site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch Lanyard Data
+        run: |
+          curl -s https://api.lanyard.rest/v1/users/1167954584254292040 > presence.json
+
+      - name: Parse and Replace Data
+        run: |
+          STATUS=$(jq -r '.data.discord_status // "offline"' presence.json)
+          USERNAME=$(jq -r '.data.discord_user.username // "Discord User"' presence.json)
+          AVATAR_ID=$(jq -r '.data.discord_user.avatar // empty' presence.json)
+          USER_ID=$(jq -r '.data.discord_user.id' presence.json)
+          
+          if [ -z "$AVATAR_ID" ] || [ "$AVATAR_ID" = "null" ]; then
+            AVATAR_URL="https://cdn.discordapp.com/avatars/1167954584254292040/$AVATAR_ID?webp=128"
+          else
+            AVATAR_URL="https://cdn.discordapp.com/avatars/1167954584254292040/$AVATAR_ID?webp=128"
+          fi
+
+          GAME=$(jq -r '.data.activities[] | select(.type == 0 or .type == 2) | .name' presence.json | head -n 1)
+          DETAILS=$(jq -r '.data.activities[] | select(.type == 0 or .type == 2) | .details' presence.json | head -n 1)
+          CUSTOM_STATUS=$(jq -r '.data.activities[] | select(.type == 4) | .state' presence.json | head -n 1)
+
+          if [ ! -z "$GAME" ] && [ "$GAME" != "null" ]; then
+            if [ ! -z "$DETAILS" ] && [ "$DETAILS" != "null" ]; then
+              ACTIVITY="Playing $GAME ($DETAILS)"
+            else
+              ACTIVITY="Playing $GAME"
+            fi
+          elif [ ! -z "$CUSTOM_STATUS" ] && [ "$CUSTOM_STATUS" != "null" ]; then
+            ACTIVITY="$CUSTOM_STATUS"
+          else
+            if [ "$STATUS" = "online" ] || [ "$STATUS" = "dnd" ] || [ "$STATUS" = "idle" ]; then
+              ACTIVITY="Active on Discord"
+            else
+              ACTIVITY="Offline"
+            fi
+          fi
+
+          ACTIVITY=$(echo "$ACTIVITY" | sed 's/[&/]/\\&/g')
+          USERNAME=$(echo "$USERNAME" | sed 's/[&/]/\\&/g')
+
+          sed -i "s|id=\"discord-dot\" class=\"[^\"]*\"|id=\"discord-dot\" class=\"$STATUS\"|g" index.html
+          sed -i "s|id=\"discord-avatar\" src=\"[^\"]*\"|id=\"discord-avatar\" src=\"$AVATAR_URL\"|g" index.html
+          sed -i "s|<span id=\"discord-username\"[^>]*>.*</span>|<span id=\"discord-username\" style=\"font-weight: 600; font-size: 15px; color: #ffffff;\">$USERNAME</span>|g" index.html
+          sed -i "s|<span id=\"discord-activity\"[^>]*>.*</span>|<span id=\"discord-activity\" style=\"font-size: 12px; color: #9aa0a6; margin-top: 2px; text-overflow: ellipsis; overflow: hidden;\">$ACTIVITY</span>|g" index.html
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          git diff-index --quiet HEAD || git commit -m "Update profile widget snapshot"
+          git push
