@@ -39,7 +39,12 @@
       <label for="status">Status</label>
 
       <div class="tab-content" id="home-content">
-        <h1>mateo ^_^</h1>
+        <pre class="ascii-banner">
+ _ __ ___    __ _ | |_   ___    ___
+| '_ ` _ \  / _` || __| / _ \  / _ \
+| | | | | || (_| || |_ |  __/ | (_) |
+|_| |_| |_| \__,_| \__| \___|  \___/
+</pre>
 
         <p>
           student • programmer • builder
@@ -50,32 +55,16 @@
           game AIs, and other software that occasionally works.
         </p>
 
-        <p>
-          eli wanted me to add this
-        </p>
-        <!-- Guns.lol Style Discord Widget -->
-<div id="discord-widget" style="display: flex; align-items: center; background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 14px; width: 320px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff;">
-  <!-- Avatar Area with Presence Dot -->
-  <div style="position: relative; width: 48px; height: 48px; flex-shrink: 0; margin-right: 14px;">
-    <img id="discord-avatar" src="https://cdn.discordapp.com/avatars/1167954584254292040/3ad6e2b8f97ef8090310e4315e0343a4?webp=128" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
-    <div id="discord-dot" class="offline" style="position: absolute; bottom: 1px; right: 1px; width: 12px; height: 12px; border-radius: 50%; border: 2px solid #121212; background-color: #747f8d; transition: background-color 0.3s;"></div>
-  </div>
-
-  <!-- Profile Details -->
-  <div style="display: flex; flex-direction: column; overflow: hidden; white-space: nowrap;">
-    <span id="discord-username" style="font-weight: 600; font-size: 15px; color: #ffffff;">._m4t30_.</span>
-    <span id="discord-activity" style="font-size: 12px; color: #9aa0a6; margin-top: 2px; text-overflow: ellipsis; overflow: hidden;">Offline</span>
-  </div>
-</div>
-
-<!-- Status Dot Glow Animations -->
-<style>
-  #discord-dot.online { background-color: #23a55a !important; box-shadow: 0 0 8px #23a55a; }
-  #discord-dot.idle { background-color: #f0b232 !important; box-shadow: 0 0 8px #f0b232; }
-  #discord-dot.dnd { background-color: #f23f43 !important; box-shadow: 0 0 8px #f23f43; }
-  #discord-dot.offline { background-color: #80848e !important; }
-</style>
-
+        <div class="discord-widget">
+          <div class="discord-avatar-wrap">
+            <img id="discord-avatar" src="https://cdn.discordapp.com/avatars/1167954584254292040/3ad6e2b8f97ef8090310e4315e0343a4?webp=128">
+            <div id="discord-dot" class="offline"></div>
+          </div>
+          <div class="discord-info">
+            <span id="discord-username">._m4t30_.</span>
+            <span id="discord-activity">Offline</span>
+          </div>
+        </div>
 
         <p class="small">
           hosted on uwu.hs.vc<br>
@@ -84,33 +73,50 @@
       </div>
 
       <div class="tab-content" id="projects-content">
-        <h3>projects.log</h3>
+        <div class="window project-window">
+          <div class="title-bar">
+            <div class="title-bar-text">FlappyBirdOS.log</div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="window-body">
+            <p>bootable operating system (lie)</p>
+            <a href="https://github.com/MateoMateoMateoMateo" class="project-link">view repo →</a>
+          </div>
+        </div>
 
-        <ul>
-          <li>
-            <a href="https://github.com/MateoMateoMateoMateo" class="project-link">
-              FlappyBirdOS
-            </a><br>
-            bootable operating system
-            (lie)
-          </li>
+        <div class="window project-window">
+          <div class="title-bar">
+            <div class="title-bar-text">NeuralChess.log</div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="window-body">
+            <p>chess engine (500 elo at best)</p>
+            <a href="https://github.com/MateoMateoMateoMateo" class="project-link">view repo →</a>
+          </div>
+        </div>
 
-          <li>
-            <a href="https://github.com/MateoMateoMateoMateo" class="project-link">
-              NeuralChess
-            </a><br>
-            chess engine
-            (500 elo at best)
-          </li>
-
-          <li>
-            <a href="https://github.com/MateoMateoMateoMateo" class="project-link">
-              DinoAI
-            </a><br>
-            reinforcement learning agent
-            (truth for once)
-          </li>
-        </ul>
+        <div class="window project-window">
+          <div class="title-bar">
+            <div class="title-bar-text">DinoAI.log</div>
+            <div class="title-bar-controls">
+              <button aria-label="Minimize"></button>
+              <button aria-label="Maximize"></button>
+              <button aria-label="Close"></button>
+            </div>
+          </div>
+          <div class="window-body">
+            <p>reinforcement learning agent (truth for once)</p>
+            <a href="https://github.com/MateoMateoMateoMateo" class="project-link">view repo →</a>
+          </div>
+        </div>
       </div>
 
       <div class="tab-content" id="links-content">
@@ -152,6 +158,35 @@ sometimes it segfaults for no reason.
   </div>
 
 </div>
+
+<div class="taskbar">
+  <button class="start-btn">
+    <img src="https://win98icons.alexmeub.com/icons/png/windows-0.png" alt="" width="16" height="16">
+    Start
+  </button>
+  <div class="taskbar-sep"></div>
+  <button class="task-item active">
+    <img src="https://win98icons.alexmeub.com/icons/png/computer_explorer-4.png" alt="" width="16" height="16">
+    mateo.exe
+  </button>
+  <div class="taskbar-spacer"></div>
+  <div class="taskbar-clock" id="clock">9:41 AM</div>
+</div>
+
+<script>
+  function updateClock() {
+    const el = document.getElementById('clock');
+    if (!el) return;
+    const now = new Date();
+    let h = now.getHours();
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    el.textContent = `${h}:${m} ${ampm}`;
+  }
+  updateClock();
+  setInterval(updateClock, 10000);
+</script>
 
 <script src="js/oneko.js" data-cat="assets/oneko.gif"></script>
 
