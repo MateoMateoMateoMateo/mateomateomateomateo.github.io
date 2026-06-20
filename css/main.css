@@ -253,6 +253,7 @@ li {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+.project-window {
     margin-bottom: 14px;
     width: 100%;
     box-sizing: border-box;
