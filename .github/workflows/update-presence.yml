@@ -17,15 +17,10 @@ jobs:
       - name: Parse and Replace Data
         run: |
           STATUS=$(jq -r '.data.discord_status // "offline"' presence.json)
-          USERNAME=$(jq -r '.data.discord_user.username // "Discord User"' presence.json)
+          USERNAME=$(jq -r '.data.discord_user.global_name // .data.discord_user.username // "Discord User"' presence.json)
           AVATAR_ID=$(jq -r '.data.discord_user.avatar // empty' presence.json)
           USER_ID=$(jq -r '.data.discord_user.id' presence.json)
-          
-          if [ -z "$AVATAR_ID" ] || [ "$AVATAR_ID" = "null" ]; then
-            AVATAR_URL="https://cdn.discordapp.com/avatars/1167954584254292040/$AVATAR_ID?webp=128"
-          else
-            AVATAR_URL="https://cdn.discordapp.com/avatars/1167954584254292040/$AVATAR_ID?webp=128"
-          fi
+          AVATAR_URL="https://cdn.discordapp.com/avatars/$USER_ID/$AVATAR_ID?webp=128"
 
           GAME=$(jq -r '.data.activities[] | select(.type == 0 or .type == 2) | .name' presence.json | head -n 1)
           DETAILS=$(jq -r '.data.activities[] | select(.type == 0 or .type == 2) | .details' presence.json | head -n 1)
@@ -47,13 +42,48 @@ jobs:
             fi
           fi
 
+          # --- guild tag (the little server-tag chip next to usernames) ---
+          GUILD_TAG=$(jq -r '.data.discord_user.primary_guild.tag // empty' presence.json)
+          GUILD_BADGE=$(jq -r '.data.discord_user.primary_guild.badge // empty' presence.json)
+          GUILD_ID=$(jq -r '.data.discord_user.primary_guild.identity_guild_id // empty' presence.json)
+
+          if [ ! -z "$GUILD_TAG" ] && [ "$GUILD_TAG" != "null" ]; then
+            GUILD_STYLE="display:inline-flex"
+            GUILD_BADGE_URL="https://cdn.discordapp.com/clan-badges/$GUILD_ID/$GUILD_BADGE.png?size=16"
+          else
+            GUILD_STYLE="display:none"
+            GUILD_BADGE_URL=""
+            GUILD_TAG=""
+          fi
+
+          # --- active platforms ---
+          ON_DESKTOP=$(jq -r '.data.active_on_discord_desktop' presence.json)
+          ON_MOBILE=$(jq -r '.data.active_on_discord_mobile' presence.json)
+          ON_WEB=$(jq -r '.data.active_on_discord_web' presence.json)
+
+          PLATFORMS=""
+          if [ "$ON_DESKTOP" = "true" ]; then
+            PLATFORMS="$PLATFORMS<span class=\"platform-icon\" title=\"Desktop\">\xf0\x9f\x96\xa5\xef\xb8\x8f</span>"
+          fi
+          if [ "$ON_MOBILE" = "true" ]; then
+            PLATFORMS="$PLATFORMS<span class=\"platform-icon\" title=\"Mobile\">\xf0\x9f\x93\xb1</span>"
+          fi
+          if [ "$ON_WEB" = "true" ]; then
+            PLATFORMS="$PLATFORMS<span class=\"platform-icon\" title=\"Web\">\xf0\x9f\x8c\x90</span>"
+          fi
+
           ACTIVITY=$(echo "$ACTIVITY" | sed 's/[&/]/\\&/g')
           USERNAME=$(echo "$USERNAME" | sed 's/[&/]/\\&/g')
+          GUILD_TAG=$(echo "$GUILD_TAG" | sed 's/[&/]/\\&/g')
 
           sed -i "s|id=\"discord-dot\" class=\"[^\"]*\"|id=\"discord-dot\" class=\"$STATUS\"|g" index.html
           sed -i "s|id=\"discord-avatar\" src=\"[^\"]*\"|id=\"discord-avatar\" src=\"$AVATAR_URL\"|g" index.html
-          sed -i "s|<span id=\"discord-username\"[^>]*>.*</span>|<span id=\"discord-username\" style=\"font-weight: 600; font-size: 15px; color: #ffffff;\">$USERNAME</span>|g" index.html
-          sed -i "s|<span id=\"discord-activity\"[^>]*>.*</span>|<span id=\"discord-activity\" style=\"font-size: 12px; color: #9aa0a6; margin-top: 2px; text-overflow: ellipsis; overflow: hidden;\">$ACTIVITY</span>|g" index.html
+          sed -i "s|<span id=\"discord-username\">.*</span>|<span id=\"discord-username\">$USERNAME</span>|g" index.html
+          sed -i "s|<span id=\"discord-activity\">.*</span>|<span id=\"discord-activity\">$ACTIVITY</span>|g" index.html
+          sed -i "s|id=\"discord-guild-tag\" class=\"guild-tag\" style=\"[^\"]*\"|id=\"discord-guild-tag\" class=\"guild-tag\" style=\"$GUILD_STYLE\"|g" index.html
+          sed -i "s|id=\"discord-guild-badge\" src=\"[^\"]*\"|id=\"discord-guild-badge\" src=\"$GUILD_BADGE_URL\"|g" index.html
+          sed -i "s|<span id=\"discord-guild-tag-text\">.*</span>|<span id=\"discord-guild-tag-text\">$GUILD_TAG</span>|g" index.html
+          sed -i "s|<div class=\"discord-platforms\" id=\"discord-platforms\">.*</div>|<div class=\"discord-platforms\" id=\"discord-platforms\">$PLATFORMS</div>|g" index.html
 
       - name: Commit and Push Changes
         run: |
